@@ -1,4 +1,15 @@
-var circles = [1,2,3,4,5,6,7,8,9]
+var createEnemies = function(n){
+  //takes in a number and instantiates that number of objects for the enemies
+  var enemyData = [];
+  for(var i = 0; i < n; i++){
+    var obj = {};
+    obj.x = randomX;
+    obj.y = randomY;
+    enemyData.push(obj);
+  }
+  return enemyData;
+}
+
 var playerData = [1]
 
 var gameBoard = {
@@ -81,7 +92,7 @@ player.x = gameBoard.width/2
 player.y = gameBoard.height/2
 
 var addEnemies = board.selectAll('circle')
-            .data(circles)
+            .data(createEnemies(30))
             .enter()
             .append('circle')
             .style('fill', function(d){return 'red'})
