@@ -1,3 +1,8 @@
+var gameBoard = {
+  height: 750,
+  width:750,
+};
+
 var createEnemies = function(n){
   //takes in a number and instantiates that number of objects for the enemies
   var enemyData = [];
@@ -10,12 +15,7 @@ var createEnemies = function(n){
   return enemyData;
 }
 
-var playerData = [1]
-
-var gameBoard = {
-  height: 750,
-  width:750,
-};
+var playerData = [{x: gameBoard.width/2, y: gameBoard.width/2, r: 10 }]
 
 var Enemy = {
 
