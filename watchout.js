@@ -84,9 +84,9 @@ var player = board.selectAll('circle')
             .append('circle')
             .style('fill', 'blue')
             .attr('class', 'playaaaaaa')
-            .attr('cx', gameBoard.width/2)
-            .attr('cy', gameBoard.height/2)
-            .attr('r', 10)
+            .attr('cx', function(d){return d.x})
+            .attr('cy', function(d){return d.y})
+            .attr('r', function(d){return d.r})
 
 player.x = gameBoard.width/2
 player.y = gameBoard.height/2
