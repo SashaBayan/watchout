@@ -6,10 +6,11 @@ var gameBoard = {
 var createEnemies = function(n){
   //takes in a number and instantiates that number of objects for the enemies
   var enemyData = [];
-  for(var i = 0; i < n; i++){
+  for(var i = 0; i <= n; i++){
     var obj = {};
-    obj.x = randomX;
-    obj.y = randomY;
+    obj.x = randomX();
+    obj.y = randomY();
+    obj.r = 30;
     enemyData.push(obj);
   }
   return enemyData;
@@ -31,7 +32,7 @@ var randomY = function(){
 
 var currentScore = 0;
 var highScore = 0;
-
+var collisionCount = 0;
 
 var scoreIncrementer = function(){
   setTimeout(function(){
@@ -44,6 +45,15 @@ var scoreIncrementer = function(){
     }
   }, 100)
   }, 1000)
+}
+
+var collisionIncrementer = function(){
+  setInterval(function(){
+  if(currentScore > highScore){
+      highScore = currentScore;
+      highScoreBoard.text('Collisions: ' + highScore);
+    }
+  }, 100)
 }
 
 var resetScore = function(){
@@ -90,34 +100,66 @@ var player = board.selectAll('circle')
 
 player.x = gameBoard.width/2
 player.y = gameBoard.height/2
+player.r = 10
+
+var changeSize = function(){
+
+    return size = Math.floor(Math.random * 10)
+
+}
 
 var addEnemies = board.selectAll('circle')
-            .data(createEnemies(30))
+            .data(createEnemies(1))
             .enter()
             .append('circle')
             .style('fill', function(d){return 'red'})
             .attr('class', 'enemies')
-            .attr('cx', function(d){ return randomX() })
-            .attr('cy', function(d){ return randomY() })
-            .attr('r', 10)
-            .attr('transform', function(d){
-              setTimeout(d, function(){
-                this.attr('cx', function(d){ return randomX() })
-                    .attr('cy', function(d){ return randomY() })
-              }, 1000)
-            })
+            .attr('cx', function(d){ d.x = randomX();
+                                     return d.x })
+            .attr('cy', function(d){ d.y = randomY()
+                                     return d.y })
+            .attr('r', function(d) { return d.r})
 
 var moveEnemies = function(){
   board.selectAll('.enemies')
   .transition()
   .duration(2000)
-  .attr('cx', function(d){ return randomX() })
-  .attr('cy', function(d){ return randomY() })
+  .attr('cx', function(d){ d.x = randomX();
+                           return d.x })
+  .attr('cy', function(d){  d.y = randomY()
+                           return d.y })
   .style('fill', function(d){ return 'blue'})
   .style('fill', function(d){ return 'green'})
 }
 
 setInterval(moveEnemies, 3000)
+
+var checkEnemyMovement = function(){
+
+
+  board.selectAll('.enemies')
+  .each(function(d){
+    var diffX = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cx')) - Math.abs(d3.select('.enemies').attr('cx')));
+    var diffY = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cy')) - Math.abs(d3.select('.enemies').attr('cy')));
+    console.log(diffX, diffY)
+    //console.log(d.x, d.y)
+    var radii = player.r + d.r;
+
+    var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+    console.log(radii, distance)
+    if(distance < radii){
+      console.log("HIT");
+    }
+  })
+  }
+
+checkEnemyMovement();
+
+setInterval(checkEnemyMovement, 3000)
+
+var checkCollision = function(){}
+
+
 
 var dragmove = d3.behavior.drag()
     .on('drag', function(d,i) {
@@ -130,9 +172,6 @@ var dragmove = d3.behavior.drag()
         return player.y;
       })
 });
-
-
-
 
 player.call(dragmove);
 
