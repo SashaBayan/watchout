@@ -18,6 +18,34 @@ var randomY = function(){
   return Math.floor(Math.random() * gameBoard.height);
 }
 
+var currentScore = 0;
+var highScore = 0;
+
+
+var scoreIncrementer = function(){
+  setTimeout(function(){
+  setInterval(function(){
+    currentScore++;
+    scoreBoard.text('Current Score: ' + currentScore)
+    if(currentScore > highScore){
+      highScore = currentScore;
+      highScoreBoard.text('High Score: ' + highScore);
+    }
+  }, 100)
+  }, 1000)
+}
+
+var resetScore = function(){
+    currentScore = 0
+}
+
+scoreIncrementer();
+
+var scoreBoard = d3.select('.current')
+            .text('Current Score: ' + currentScore);
+
+var highScoreBoard = d3.select('.high')
+            .text('High Score: ' + highScore);
 
 
 var board = d3.select('body')
