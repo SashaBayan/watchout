@@ -109,7 +109,7 @@ var changeSize = function(){
 }
 
 var addEnemies = board.selectAll('circle')
-            .data(createEnemies(1))
+            .data(createEnemies(10))
             .enter()
             .append('circle')
             .style('fill', function(d){return 'red'})
@@ -139,23 +139,25 @@ var checkEnemyMovement = function(){
 
   board.selectAll('.enemies')
   .each(function(d){
+
     var diffX = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cx')) - Math.abs(d3.select('.enemies').attr('cx')));
     var diffY = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cy')) - Math.abs(d3.select('.enemies').attr('cy')));
-    console.log(diffX, diffY)
+    //console.log(board.selectAll('.enemies'));
     //console.log(d.x, d.y)
     var radii = player.r + d.r;
 
     var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-    console.log(radii, distance)
+    // console.log(radii, distance)
     if(distance < radii){
       console.log("HIT");
+
     }
   })
   }
 
 checkEnemyMovement();
 
-setInterval(checkEnemyMovement, 3000)
+setInterval(checkEnemyMovement, 100)
 
 var checkCollision = function(){}
 
