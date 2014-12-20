@@ -1,5 +1,14 @@
-/* your beautiful css styling goes here! */
+.gameBoard{
+  background-color: #99CCFF;
 
-/* Note: an asteroid image is included in this repo.
-Feel free to use it if you like. */
+}
 
+.test{
+  background-color: red;
+
+}
+
+.SVG {
+      background-color: #99CCFF;
+
+}
