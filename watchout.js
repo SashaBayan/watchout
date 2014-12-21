@@ -49,12 +49,11 @@ var scoreIncrementer = function(){
 
 var collisionIncrementer = function(){
   setInterval(function(){
-  if(currentScore > highScore){
-      highScore = currentScore;
-      highScoreBoard.text('Collisions: ' + highScore);
-    }
+      collisionBoard.text('Collisions: ' + collisionCount);
   }, 100)
 }
+
+collisionIncrementer();
 
 var resetScore = function(){
     currentScore = 0
@@ -68,6 +67,8 @@ var scoreBoard = d3.select('.current')
 var highScoreBoard = d3.select('.high')
             .text('High Score: ' + highScore);
 
+var collisionBoard = d3.select('.collisions')
+            .text('Collisions: ' + collisionCount);
 
 var board = d3.select('body')
             .append('svg')
@@ -140,26 +141,34 @@ var checkEnemyMovement = function(){
   board.selectAll('.enemies')
   .each(function(d){
 
-    var diffX = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cx')) - Math.abs(d3.select('.enemies').attr('cx')));
-    var diffY = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cy')) - Math.abs(d3.select('.enemies').attr('cy')));
+
+
+    var diffX = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cx')) - Math.abs(d.x));
+    var diffY = Math.abs(Math.abs(d3.select('.playaaaaaa').attr('cy')) - Math.abs(d.y));
+
     //console.log(board.selectAll('.enemies'));
     //console.log(d.x, d.y)
-    var radii = player.r + d.r;
+    //we can add 5 or 10 to the radii for a more visually accurate collision
+    var radii = player.r + d.r + 10;
 
     var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
     // console.log(radii, distance)
     if(distance < radii){
-      console.log("HIT");
-
+      currentScore = 0;
+      collisionCount++;
     }
   })
   }
 
-checkEnemyMovement();
 
 setInterval(checkEnemyMovement, 100)
 
-var checkCollision = function(){}
+var checkCollision = function(){
+
+
+
+
+}
 
 
 
